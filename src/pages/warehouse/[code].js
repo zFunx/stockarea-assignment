@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import WarehouseImage from "@/assets/images/Warehouse.jpg";
+import WarehouseImage from "@/assets/images/warehouse.jpg";
 import { useRouter } from "next/router";
 import { store } from "@/store/store";
 import { useState } from "react";

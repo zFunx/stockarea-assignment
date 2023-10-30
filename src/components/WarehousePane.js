@@ -1,5 +1,5 @@
 import WarehouseCard from "./WarehouseCard";
-import WarehouseImage from "@/assets/images/Warehouse.jpg";
+import WarehouseImage from "@/assets/images/warehouse.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import NoItemsFound from "./NoItemsFound";
 
