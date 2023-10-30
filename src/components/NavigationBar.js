@@ -1,20 +1,24 @@
+import { setQuery } from "@/store/warehouseSlice";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const NavigationBar = ({ logoSrc, onSearch }) => {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
     if (onSearch) {
-      onSearch(event.target.value);
+      dispatch(setQuery(event.target.value));
     }
   };
-
+  
   const clearSearch = () => {
     setSearchQuery("");
     if (onSearch) {
-      onSearch("");
+      dispatch(setQuery(""));
     }
   };
 

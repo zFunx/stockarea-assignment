@@ -14,7 +14,7 @@ const MinSlider = ({ min, max, onChange }) => {
   return (
     <>
       More than
-      <input type="number" className="border-lg mb-2 mt-1 py-1 px-2 border border-gray-700" value={value} onInput={handleChange} />
+      <div className="flex items-center gap-2"><input type="number" className="border-lg mb-2 mt-1 py-1 px-2 border border-gray-700" value={value} onInput={handleChange} /> sqft</div>
       <input
         type="range"
         min={min}

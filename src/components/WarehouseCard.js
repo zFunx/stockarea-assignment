@@ -12,7 +12,7 @@ const WarehouseCard = ({ name, code, imageSrc, city, space_available, cluster })
         </p>
         <p className="text-gray-700 text-base">
           Space Available:{" "}
-          <span className="font-semibold">{space_available}</span>
+          <span className="font-semibold">{space_available} sqft</span>
         </p>
       </div>
     </Link>
