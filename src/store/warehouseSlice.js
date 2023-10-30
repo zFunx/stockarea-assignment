@@ -76,6 +76,25 @@ export const warehouseSlice = createSlice({
       state.filter.minSpaceAvailable = action.payload;
       applyFilter(state);
     },
+    updateWarehouseByCode: (state, action) => {
+      const tempWarehouses = [...state.warehouses];
+      const matchedWarehouse = tempWarehouses.find(
+        (warehouse) => warehouse.code === action.payload.code
+      );
+      if (matchedWarehouse) {
+        matchedWarehouse.name = action.payload.data.name;
+        matchedWarehouse.code = action.payload.data.code;
+        matchedWarehouse.id = action.payload.data.id;
+        matchedWarehouse.city = action.payload.data.city;
+        matchedWarehouse.space_available = action.payload.data.space_available;
+        matchedWarehouse.type = action.payload.data.type;
+        matchedWarehouse.cluster = action.payload.data.cluster;
+        matchedWarehouse.is_registered = action.payload.data.is_registered;
+        matchedWarehouse.is_live = action.payload.data.is_live;
+
+        state.warehouses = tempWarehouses;
+      }
+    },
   },
 });
 
@@ -85,6 +104,7 @@ export const {
   setFilterCities,
   setFilterClusters,
   setFilterMinSpaceAvailabe,
+  updateWarehouseByCode,
 } = warehouseSlice.actions;
 
 export default warehouseSlice.reducer;
