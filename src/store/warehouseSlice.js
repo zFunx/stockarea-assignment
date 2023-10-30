@@ -2,9 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import warehouses from "@/assets/warehouseData.json";
 
 const initialState = {
-  filteredWarehouses: [...warehouses],
+  filteredWarehouses: warehouses,
   filter: {
-    query: "" // contains search terms
+    query: "", // contains search terms
+  },
+};
+
+const applyFilter = (state) => {
+  if (state.filter.query) {
+    state.filteredWarehouses = warehouses.filter((warehouse) => {
+      if (warehouse.name.toLowerCase().includes(state.filter.query)) {
+        return true;
+      }
+      return false;
+    });
+  } else {
+    state.filteredWarehouses = warehouses;
   }
 };
 
@@ -12,8 +25,9 @@ export const warehouseSlice = createSlice({
   name: "warehouses",
   initialState,
   reducers: {
-    findByName: (state, action) => {
-      //   Todo
+    setQuery: (state, action) => {
+      state.filter.query = action.payload.toLowerCase();
+      applyFilter(state);
     },
     decrement: (state) => {
       state.value -= 1;
@@ -25,7 +39,6 @@ export const warehouseSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } =
-  warehouseSlice.actions;
+export const { setQuery } = warehouseSlice.actions;
 
 export default warehouseSlice.reducer;
