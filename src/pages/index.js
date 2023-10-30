@@ -2,12 +2,13 @@ import NavigationBar from "@/components/NavigationBar";
 import WarehousePane from "@/components/WarehousePane";
 import logo from "@/assets/images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { setFilterCities, setQuery } from "@/store/warehouseSlice";
+import { setFilterCities, setQuery, setFilterClusters} from "@/store/warehouseSlice";
 import Collapsible from "@/components/Collapsible";
 import CheckboxList from "@/components/CheckboxList";
 
 export default function Home() {
   const cities = useSelector((state) => state.warehouses.cities);
+  const clusters = useSelector((state) => state.warehouses.clusters);
   const dispatch = useDispatch();
   return (
     <>
@@ -24,6 +25,14 @@ export default function Home() {
                 items={cities}
                 onSelectionChange={(filterCities) =>
                   dispatch(setFilterCities(filterCities))
+                }
+              />
+            </Collapsible>
+            <Collapsible title="Clusters">
+              <CheckboxList
+                items={clusters}
+                onSelectionChange={(filterClusters) =>
+                  dispatch(setFilterClusters(filterClusters))
                 }
               />
             </Collapsible>

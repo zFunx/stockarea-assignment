@@ -7,6 +7,7 @@ const initialState = {
   filter: {
     query: "", // contains search terms
     cities: [],
+    clusters: [],
   },
   cities: [...new Set(warehouses.map((warehouse) => warehouse.city))],
   clusters: [...new Set(warehouses.map((warehouse) => warehouse.cluster))],
@@ -14,6 +15,8 @@ const initialState = {
 
 const applyFilter = (state) => {
   let filteredWarehouses = [...state.warehouses];
+
+  // Filter by name
   if (state.filter.query) {
     filteredWarehouses = filteredWarehouses.filter((warehouse) => {
       if (warehouse.name.toLowerCase().includes(state.filter.query)) {
@@ -22,9 +25,21 @@ const applyFilter = (state) => {
       return false;
     });
   }
+
+  // Filter by cities
   if (state.filter.cities.length > 0) {
     filteredWarehouses = filteredWarehouses.filter((warehouse) => {
       if (state.filter.cities.includes(warehouse.city)) {
+        return true;
+      }
+      return false;
+    });
+  }
+  
+  // Filter by clusters
+  if (state.filter.clusters.length > 0) {
+    filteredWarehouses = filteredWarehouses.filter((warehouse) => {
+      if (state.filter.clusters.includes(warehouse.cluster)) {
         return true;
       }
       return false;
@@ -46,6 +61,10 @@ export const warehouseSlice = createSlice({
       state.filter.cities = action.payload;
       applyFilter(state);
     },
+    setFilterClusters: (state, action) => {
+      state.filter.clusters = action.payload;
+      applyFilter(state);
+    },
     decrement: (state) => {
       state.value -= 1;
     },
@@ -56,6 +75,6 @@ export const warehouseSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setQuery, setFilterCities } = warehouseSlice.actions;
+export const { setQuery, setFilterCities, setFilterClusters } = warehouseSlice.actions;
 
 export default warehouseSlice.reducer;
