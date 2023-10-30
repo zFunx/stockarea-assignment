@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import warehouses from "@/assets/warehouseData.json";
 
+const minSpaceAvailable = Math.min(
+  ...warehouses.map((warehouse) => warehouse.space_available)
+);
 const initialState = {
   warehouses,
   filteredWarehouses: warehouses,
@@ -8,9 +11,14 @@ const initialState = {
     query: "", // contains search terms
     cities: [],
     clusters: [],
+    minSpaceAvailable,
   },
   cities: [...new Set(warehouses.map((warehouse) => warehouse.city))],
   clusters: [...new Set(warehouses.map((warehouse) => warehouse.cluster))],
+  minSpaceAvailable,
+  maxSpaceAvailable: Math.max(
+    ...warehouses.map((warehouse) => warehouse.space_available)
+  ),
 };
 
 const applyFilter = (state) => {
@@ -28,23 +36,22 @@ const applyFilter = (state) => {
 
   // Filter by cities
   if (state.filter.cities.length > 0) {
-    filteredWarehouses = filteredWarehouses.filter((warehouse) => {
-      if (state.filter.cities.includes(warehouse.city)) {
-        return true;
-      }
-      return false;
-    });
+    filteredWarehouses = filteredWarehouses.filter((warehouse) =>
+      state.filter.cities.includes(warehouse.city)
+    );
   }
-  
+
   // Filter by clusters
   if (state.filter.clusters.length > 0) {
-    filteredWarehouses = filteredWarehouses.filter((warehouse) => {
-      if (state.filter.clusters.includes(warehouse.cluster)) {
-        return true;
-      }
-      return false;
-    });
+    filteredWarehouses = filteredWarehouses.filter((warehouse) =>
+      state.filter.clusters.includes(warehouse.cluster)
+    );
   }
+
+  // Filter by space available
+  filteredWarehouses = filteredWarehouses.filter(
+    (warehouse) => warehouse.space_available > state.filter.minSpaceAvailable
+  );
 
   state.filteredWarehouses = filteredWarehouses;
 };
@@ -65,16 +72,19 @@ export const warehouseSlice = createSlice({
       state.filter.clusters = action.payload;
       applyFilter(state);
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setFilterMinSpaceAvailabe: (state, action) => {
+      state.filter.minSpaceAvailable = action.payload;
+      applyFilter(state);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setQuery, setFilterCities, setFilterClusters } = warehouseSlice.actions;
+export const {
+  setQuery,
+  setFilterCities,
+  setFilterClusters,
+  setFilterMinSpaceAvailabe,
+} = warehouseSlice.actions;
 
 export default warehouseSlice.reducer;
