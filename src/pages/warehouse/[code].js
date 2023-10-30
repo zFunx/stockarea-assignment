@@ -5,17 +5,9 @@ import { store } from "@/store/store";
 import { useState } from "react";
 import { updateWarehouseByCode } from "@/store/warehouseSlice";
 
-// export async function getServerSideProps(context) {
-//   // Initialize the Redux store
-//   const reduxStore = store();
-//   const { dispatch } = reduxStore;
-
-//   // Get the current state after dispatching
-//   const state = reduxStore.getState();
-//   console.log(state);
-//   // Pass the initial state to the page as props
-//   return { props: { initialReduxState: state } };
-// }
+export function getServerSideProps() {
+  return { props: {} };
+}
 
 const Field = ({ children }) => (
   <div className="flex gap-2 items-center mb-4">{children}</div>

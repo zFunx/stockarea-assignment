@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import warehouses from "@/assets/warehouseData.json";
+import { HYDRATE } from "next-redux-wrapper";
 
 const minSpaceAvailable = Math.min(
   ...warehouses.map((warehouse) => warehouse.space_available)
@@ -92,8 +93,34 @@ export const warehouseSlice = createSlice({
         matchedWarehouse.is_registered = action.payload.data.is_registered;
         matchedWarehouse.is_live = action.payload.data.is_live;
 
+        state.filter = {
+          query: "", // contains search terms
+          cities: [],
+          clusters: [],
+          minSpaceAvailable,
+        };
+        state.cities = [
+          ...new Set(tempWarehouses.map((warehouse) => warehouse.city)),
+        ];
+        state.clusters = [
+          ...new Set(tempWarehouses.map((warehouse) => warehouse.cluster)),
+        ];
+        state.minSpaceAvailable = Math.min(
+          ...tempWarehouses.map((warehouse) => warehouse.space_available)
+        );
+        state.maxSpaceAvailable = Math.max(
+          ...tempWarehouses.map((warehouse) => warehouse.space_available)
+        );
+
         state.warehouses = tempWarehouses;
       }
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+      };
     },
   },
 });
