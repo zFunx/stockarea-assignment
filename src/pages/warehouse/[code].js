@@ -29,9 +29,7 @@ const WarehousePage = () => {
   const router = useRouter();
   const { code } = router.query;
   const warehouses = useSelector((state) => state.warehouses.warehouses);
-  const [warehouseByCode, setWarehouseByCode] = useState(
-    warehouses.find((warehouse) => warehouse.code === code)
-  );
+  const warehouseByCode = warehouses.find((warehouse) => warehouse.code === code);
 
   const [isEditing, setIsEditing] = useState(false);
   const handleEditClick = () => {
@@ -50,8 +48,8 @@ const WarehousePage = () => {
       is_live: formData.get("is_live") === "on",
     };
 
-    dispatch(updateWarehouseByCode({ code, data: formValues }));
-    setWarehouseByCode({ ...warehouseByCode, ...formValues });
+    const updatedData = { ...warehouseByCode, ...formValues };
+    dispatch(updateWarehouseByCode({ code, data: updatedData }));
 
     setIsEditing(false);
   };

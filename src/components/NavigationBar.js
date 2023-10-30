@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 const NavigationBar = ({ logoSrc, onSearch }) => {
@@ -21,7 +22,7 @@ const NavigationBar = ({ logoSrc, onSearch }) => {
     <nav className="bg-white shadow-md">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center py-3 flex-wrap gap-4">
-          <img src={logoSrc} alt="Logo" className="h-10" />
+          <Link href="/"><img src={logoSrc} alt="Logo" className="h-10" /></Link>
           <div className="flex border-2 rounded w-full sm:w-auto">
             <input
               type="text"

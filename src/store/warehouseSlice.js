@@ -113,6 +113,7 @@ export const warehouseSlice = createSlice({
         );
 
         state.warehouses = tempWarehouses;
+        state.filteredWarehouses = tempWarehouses;
       }
     },
   },
