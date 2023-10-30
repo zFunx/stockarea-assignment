@@ -10,4 +10,4 @@ $ npm i
 $ npm run dev
 ```
 
-Demo site is hosted at
+Demo site is hosted at https://stockarea-assignment.vercel.app/
